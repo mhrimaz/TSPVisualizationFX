@@ -5,27 +5,23 @@
  */
 package tspvisualizationfx;
 
-import java.util.function.Predicate;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import solvers.genetic.GA;
+import solvers.genetic.Population;
+import solvers.model.City;
+import solvers.model.CityManager;
+import solvers.model.Tour;
 
 /**
  *
