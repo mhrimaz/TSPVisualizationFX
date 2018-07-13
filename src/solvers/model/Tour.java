@@ -19,20 +19,28 @@ public class Tour implements Comparable<Tour> {
 
     private City[] tour;
     private double fitness = 0;
-    private int distance = 0;
+    private double distance = 0;
 
     // Constructs a blank tour
     public Tour() {
         tour = new City[CityManager.getInstance().numberOfCities()];
-    }
 
-    public void generateIndividual() {
         for (int cityIndex = 0; cityIndex < CityManager.getInstance().numberOfCities(); cityIndex++) {
             setCity(cityIndex, CityManager.getInstance().getCity(cityIndex));
         }
+    }
 
+
+    public Tour(Tour toCopy) {
+        tour = toCopy.tour.clone();
+        fitness = toCopy.fitness;
+        distance = toCopy.distance;
+    }
+
+    public void shuffleTour() {
         ArrayUtil.shuffle(tour);
     }
+
 
     public City getCity(int tourPosition) {
         return tour[tourPosition];
@@ -44,6 +52,10 @@ public class Tour implements Comparable<Tour> {
         distance = 0;
     }
 
+    public int findCityIndex(City city){
+        return ArrayUtil.findIndex(tour,city);
+    }
+
     // Gets the tours fitness
     public double getFitness() {
         if (fitness == 0) {
@@ -53,7 +65,7 @@ public class Tour implements Comparable<Tour> {
     }
 
     // Gets the total distance of the tour
-    public int getDistance() {
+    public double getDistance() {
         if (distance == 0) {
             int tourDistance = 0;
             for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {
@@ -96,11 +108,11 @@ public class Tour implements Comparable<Tour> {
 
     @Override
     public String toString() {
-        String geneString = "|";
+        StringBuilder geneString = new StringBuilder( "|");
         for (int i = 0; i < tourSize(); i++) {
-            geneString += getCity(i) + "|";
+            geneString.append(getCity(i).toString()).append( "|");
         }
-        return geneString;
+        return geneString.toString();
     }
 
     @Override
@@ -109,5 +121,9 @@ public class Tour implements Comparable<Tour> {
             return -1;
         }
         return (int) (this.distance - o.distance);
+    }
+
+    public void swapCity(int firstIndex, int secondIndex) {
+        ArrayUtil.swap(tour,firstIndex,secondIndex);
     }
 }

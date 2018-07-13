@@ -39,7 +39,7 @@ public class City implements Comparable<City> {
 
     @Override
     public String toString() {
-        return location.toString();
+        return "("+location.getX()+","+location.getY()+")";
     }
 
     @Override
