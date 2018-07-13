@@ -24,7 +24,7 @@ public class Population {
             // Loop and create individuals
             for (int i = 0; i < populationSize(); i++) {
                 Tour newTour = new Tour();
-                newTour.generateIndividual();
+                newTour.shuffleTour();
                 saveTour(i, newTour);
             }
         }

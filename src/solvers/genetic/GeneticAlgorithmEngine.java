@@ -12,9 +12,9 @@ import solvers.model.Tour;
  *
  * @author mhrimaz
  */
-public class GA {
+public class GeneticAlgorithmEngine {
 
-    /* GA parameters */
+    /* GeneticAlgorithmEngine parameters */
     private static final double mutationRate = 0.015;
     private static final int tournamentSize = 5;
     private static final boolean elitism = true;
@@ -62,6 +62,8 @@ public class GA {
 
         // Loop and add the sub tour from parent1 to our child
         for (int i = 0; i < child.tourSize(); i++) {
+            //empty the slot
+            child.setCity(i,null);
             // If our start position is less than the end position
             if (startPos < endPos && i > startPos && i < endPos) {
                 child.setCity(i, parent1.getCity(i));
@@ -99,13 +101,7 @@ public class GA {
                 // Get a second random position in the tour
                 int tourPos2 = (int) (tour.tourSize() * Math.random());
 
-                // Get the cities at target position in tour
-                City city1 = tour.getCity(tourPos1);
-                City city2 = tour.getCity(tourPos2);
-
-                // Swap them around
-                tour.setCity(tourPos2, city1);
-                tour.setCity(tourPos1, city2);
+                tour.swapCity(tourPos1,tourPos2);
             }
         }
     }
