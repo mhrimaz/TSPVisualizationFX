@@ -26,7 +26,7 @@ public class ArrayUtil {
 
     public static boolean contains(Object[] array, Object target) {
         for(Object item:array){
-            if(item.equals(target)){
+            if(item!=null && item.equals(target)){
                 return true;
             }
         }
