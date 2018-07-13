@@ -5,7 +5,10 @@
  */
 package solvers.model;
 
+import solvers.ArrayUtil;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -14,34 +17,29 @@ import java.util.Collections;
  */
 public class Tour implements Comparable<Tour> {
 
-    private ArrayList<City> tour = new ArrayList<>();
+    private City[] tour;
     private double fitness = 0;
     private int distance = 0;
 
     // Constructs a blank tour
     public Tour() {
-        for (int i = 0; i < CityManager.getInstance().numberOfCities(); i++) {
-            tour.add(null);
-        }
-    }
-
-    public Tour(ArrayList tour) {
-        this.tour = tour;
+        tour = new City[CityManager.getInstance().numberOfCities()];
     }
 
     public void generateIndividual() {
         for (int cityIndex = 0; cityIndex < CityManager.getInstance().numberOfCities(); cityIndex++) {
             setCity(cityIndex, CityManager.getInstance().getCity(cityIndex));
         }
-        Collections.shuffle(tour);
+
+        ArrayUtil.shuffle(tour);
     }
 
     public City getCity(int tourPosition) {
-        return tour.get(tourPosition);
+        return tour[tourPosition];
     }
 
     public void setCity(int tourPosition, City city) {
-        tour.set(tourPosition, city);
+        tour[tourPosition]= city;
         fitness = 0;
         distance = 0;
     }
@@ -75,41 +73,25 @@ public class Tour implements Comparable<Tour> {
 
     // Get number of cities on our tour
     public int tourSize() {
-        return tour.size();
+        return tour.length;
     }
 
     // Check if the tour contains a city
     public boolean containsCity(City city) {
-        return tour.contains(city);
+        return ArrayUtil.contains(tour,city);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tour tour1 = (Tour) o;
+        return Arrays.equals(tour, tour1.tour);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.fitness) ^ (Double.doubleToLongBits(this.fitness) >>> 32));
-        hash = 37 * hash + this.distance;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Tour other = (Tour) obj;
-        if (Double.doubleToLongBits(this.fitness) != Double.doubleToLongBits(other.fitness)) {
-            return false;
-        }
-        if (this.distance != other.distance) {
-            return false;
-        }
-        return true;
+        return Arrays.hashCode(tour);
     }
 
     @Override
