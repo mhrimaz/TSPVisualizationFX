@@ -12,8 +12,9 @@ public class Particle {
     private Tour pBest;
     private Tour gBest;
 
-    private static final double ALPHA = 0.85;
-    private static final double BETA = 0.85;
+    private static final double ALPHA = 1;
+    private static final double BETA = 1;
+
 
     public Particle(){
         this(new Tour());
@@ -32,7 +33,7 @@ public class Particle {
         //Step 3-2
         List<SwapOperator> swapsToGBest = SwapOperator.generateBasicSwapSequence(gBest, currentSolution);
         //Step 3-3
-        setVelocity(SwapOperator.mergeSequences(velocity,swapsToPBest,ALPHA,swapsToGBest,BETA));
+        setVelocity(SwapOperator.mergeSequences(velocity,Math.random(),swapsToPBest,Math.random(),swapsToGBest,Math.random()));
         //Step 3-4
         SwapOperator.apply(currentSolution,velocity);
         //Step 3-5
@@ -62,7 +63,16 @@ public class Particle {
         this.gBest = gBest;
     }
 
+    public List<SwapOperator> getVelocity() {
+        return velocity;
+    }
+
     public Tour getCurrentSolution(){
         return currentSolution;
+    }
+
+    @Override
+    public String toString() {
+        return currentSolution.toString() + " # Cost: "+getDistance() +" # Velocity "+ getVelocity();
     }
 }
