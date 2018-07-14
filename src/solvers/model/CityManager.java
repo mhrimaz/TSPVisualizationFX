@@ -39,4 +39,8 @@ public class CityManager {
     public int numberOfCities() {
         return cities.size();
     }
+
+    public void clear() {
+        cities.clear();
+    }
 }

@@ -39,6 +39,8 @@ public class Tour implements Comparable<Tour> {
 
     public void shuffleTour() {
         ArrayUtil.shuffle(tour);
+        distance = 0;
+        fitness=0;
     }
 
 
@@ -59,7 +61,7 @@ public class Tour implements Comparable<Tour> {
     // Gets the tours fitness
     public double getFitness() {
         if (fitness == 0) {
-            fitness = 1 / (double) getDistance();
+            fitness = 1 /getDistance();
         }
         return fitness;
     }
@@ -67,15 +69,10 @@ public class Tour implements Comparable<Tour> {
     // Gets the total distance of the tour
     public double getDistance() {
         if (distance == 0) {
-            int tourDistance = 0;
+            double tourDistance = 0;
             for (int cityIndex = 0; cityIndex < tourSize(); cityIndex++) {
                 City fromCity = getCity(cityIndex);
-                City destinationCity;
-                if (cityIndex + 1 < tourSize()) {
-                    destinationCity = getCity(cityIndex + 1);
-                } else {
-                    destinationCity = getCity(0);
-                }
+                City destinationCity = getCity((cityIndex + 1)%tourSize());
                 tourDistance += fromCity.distanceTo(destinationCity);
             }
             distance = tourDistance;
@@ -125,5 +122,7 @@ public class Tour implements Comparable<Tour> {
 
     public void swapCity(int firstIndex, int secondIndex) {
         ArrayUtil.swap(tour,firstIndex,secondIndex);
+        distance = 0;
+        fitness=0;
     }
 }

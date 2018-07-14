@@ -26,8 +26,8 @@ public class City implements Comparable<City> {
         return (int) this.getLocation().distance(o.getLocation());
     }
 
-    public int distanceTo(City o) {
-        return (int) this.getLocation().distance(o.getLocation());
+    public double distanceTo(City o) {
+        return this.getLocation().distance(o.getLocation());
     }
 
     /**
@@ -39,7 +39,7 @@ public class City implements Comparable<City> {
 
     @Override
     public String toString() {
-        return "("+location.getX()+","+location.getY()+")";
+        return "("+(int)location.getX()+","+(int)location.getY()+")";
     }
 
     @Override
