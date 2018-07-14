@@ -37,28 +37,39 @@ public class SwapOperator {
     public static List<SwapOperator> generateRandomSwapSequence(Tour tour){
         Random rand = new Random();
         List<SwapOperator> swaps = new ArrayList<>();
-        swaps.add(new SwapOperator(rand.nextInt(tour.tourSize()),rand.nextInt(tour.tourSize())));
+        for(int i=0;i<rand.nextInt(tour.tourSize()*2)+1;i++){
+            int ra1 = rand.nextInt(tour.tourSize());
+            int ra2 = rand.nextInt(tour.tourSize());
+            while(ra1==ra2){
+                ra2 = rand.nextInt(tour.tourSize());
+            }
+            swaps.add(new SwapOperator(ra1,ra2));
+        }
+
         return swaps;
     }
 
-    public static List<SwapOperator> mergeSequences(List<SwapOperator> v1,List<SwapOperator> v2
+    public static List<SwapOperator> mergeSequences(List<SwapOperator> v1,double w,List<SwapOperator> v2
             ,double alpha,List<SwapOperator> v3, double beta){
         List<SwapOperator> swaps = new ArrayList<>();
-        swaps.addAll(v1);
-        for(int i=0;i<v2.size();i++){
-            if(Math.random()<alpha){
-                swaps.add(v2.get(i));
+        for (SwapOperator aV1 : v1) {
+            if (Math.random() < w) {
+                swaps.add(aV1);
             }
         }
-        for(int i=0;i<v3.size();i++){
-            if(Math.random()<beta){
-                swaps.add(v3.get(i));
+        for (SwapOperator aV2 : v2) {
+            if (Math.random() < alpha) {
+                swaps.add(aV2);
+            }
+        }
+        for (SwapOperator aV3 : v3) {
+            if (Math.random() < beta) {
+                swaps.add(aV3);
             }
         }
         return swaps;
     }
     public static List<SwapOperator> generateBasicSwapSequence(Tour source, Tour target){
-
         if(source.tourSize()!=target.tourSize()){
             throw new IllegalArgumentException("Two Tour must be in equal length");
         }
@@ -73,11 +84,6 @@ public class SwapOperator {
                 swaps.add(new SwapOperator(index,findIndex));
             }
             index++;
-        }
-        if(!sourceCopy.equals(targetCopy)){
-            System.out.println("sourceCopy = " + sourceCopy);
-            System.out.println("targetCopy = " + targetCopy);
-            throw new IllegalStateException("Broken Swap Sequence Generator");
         }
         return swaps;
     }
